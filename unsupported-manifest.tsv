@@ -1,0 +1,7 @@
+kind	original_path	build	install
+header	lib_unix/include/p101_unix/p101_fstab.h	not-built	not-installed
+header	lib_unix/include/p101_unix/p101_ftw.h	not-built	not-installed
+header	lib_unix/include/p101_unix/sys/p101_mount.h	not-built	not-installed
+source	lib_unix/src/fstab.c	not-built	not-installed
+source	lib_unix/src/ftw.c	not-built	not-installed
+source	lib_unix/src/sys/mount.c	not-built	not-installed
