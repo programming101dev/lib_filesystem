@@ -173,7 +173,7 @@ int p101_scandir(const struct p101_env *env, struct p101_error *err, const char 
     {
         if(*namelist != NULL)
         {
-            P101_TRACK_ALLOC(env, (const void *)*namelist, (size_t)ret_val * sizeof(**namelist));
+            P101_TRACK_ALLOC(env, (const void *)*namelist, (size_t)ret_val * sizeof(struct dirent *));
             for(int index = 0; index < ret_val; index++)
             {
                 P101_TRACK_ALLOC(env, (*namelist)[index], sizeof(*(*namelist)[index]));
