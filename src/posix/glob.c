@@ -53,9 +53,12 @@ int p101_glob(const struct p101_env *env, struct p101_error *err, const char *re
 
 void p101_globfree(const struct p101_env *env, glob_t *pglob)
 {
+    char resource_id[P101_ENV_POINTER_RESOURCE_ID_SIZE];
+
     P101_TRACE(env);
+    p101_env_pointer_resource_id(resource_id, sizeof(resource_id), pglob);
     errno = 0;
     globfree(pglob);
-    P101_TRACK_POINTER_RESOURCE_RELEASE(env, "glob-result", pglob, NULL);
+    P101_TRACK_RESOURCE_RELEASE(env, "glob-result", resource_id, NULL);
     P101_TRACE_EXIT(env);
 }
