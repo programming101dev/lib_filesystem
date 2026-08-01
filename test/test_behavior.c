@@ -20,7 +20,7 @@ static int failures;
         }                                                                                                                                                                                                                                                          \
     } while(0)
 
-static void test_path_helpers(const struct p101_env *env)
+static void test_path_helpers(const struct p101_env *env, struct p101_error *err)
 {
     struct dirent        first           = {0};
     struct dirent        second          = {0};
@@ -35,9 +35,9 @@ static void test_path_helpers(const struct p101_env *env)
     EXPECT(p101_alphasort(env, &first_pointer, &second_pointer) < 0);
 
     /* P101_TEST_CASE(p101_basename) */
-    EXPECT(strcmp(p101_basename(env, basename_path), "p101-name") == 0);
+    EXPECT(strcmp(p101_basename(env, err, basename_path), "p101-name") == 0);
     /* P101_TEST_CASE(p101_dirname) */
-    EXPECT(strcmp(p101_dirname(env, dirname_path), "/tmp") == 0);
+    EXPECT(strcmp(p101_dirname(env, err, dirname_path), "/tmp") == 0);
 }
 
 static void test_directory_helpers(const struct p101_env *env)
@@ -102,7 +102,7 @@ int main(void)
         p101_error_destroy(err);
         return EXIT_FAILURE;
     }
-    test_path_helpers(env);
+    test_path_helpers(env, err);
     test_directory_helpers(env);
     test_glob_and_process_helpers(env);
     p101_env_destroy(env);

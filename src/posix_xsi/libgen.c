@@ -2,25 +2,37 @@
 #include <libgen.h>
 #include <p101_env/wrapper.h>
 
-char *p101_basename(const struct p101_env *env, char *path)
+char *p101_basename(const struct p101_env *env, struct p101_error *err, char *path)
 {
     char *ret_val;
 
     P101_TRACE(env);
+    P101_WRAPPER_FAULT_RETURN(env, err, NULL);
     errno   = 0;
     ret_val = basename(path);
+
+    if(ret_val == NULL && errno != 0)
+    {
+        P101_ERROR_RAISE_ERRNO(err, errno);
+    }
 
     P101_TRACE_EXIT(env);
     return ret_val;
 }
 
-char *p101_dirname(const struct p101_env *env, char *path)
+char *p101_dirname(const struct p101_env *env, struct p101_error *err, char *path)
 {
     char *ret_val;
 
     P101_TRACE(env);
+    P101_WRAPPER_FAULT_RETURN(env, err, NULL);
     errno   = 0;
     ret_val = dirname(path);
+
+    if(ret_val == NULL && errno != 0)
+    {
+        P101_ERROR_RAISE_ERRNO(err, errno);
+    }
 
     P101_TRACE_EXIT(env);
     return ret_val;

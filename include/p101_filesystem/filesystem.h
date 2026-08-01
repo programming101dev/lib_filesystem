@@ -31,13 +31,13 @@ extern "C"
 
     int            p101_access(const struct p101_env *env, struct p101_error *err, const char *path, int amode);
     int            p101_alphasort(const struct p101_env *env, const struct dirent **d1, const struct dirent **d2);
-    char          *p101_basename(const struct p101_env *env, char *path);
+    char          *p101_basename(const struct p101_env *env, struct p101_error *err, char *path);
     int            p101_chdir(const struct p101_env *env, struct p101_error *err, const char *path);
     int            p101_chmod(const struct p101_env *env, struct p101_error *err, const char *path, mode_t mode);
     int            p101_chown(const struct p101_env *env, struct p101_error *err, const char *path, uid_t owner, gid_t group);
     int            p101_closedir(const struct p101_env *env, struct p101_error *err, DIR *dirp);
     int            p101_dirfd(const struct p101_env *env, struct p101_error *err, DIR *dirp);
-    char          *p101_dirname(const struct p101_env *env, char *path);
+    char          *p101_dirname(const struct p101_env *env, struct p101_error *err, char *path);
     int            p101_faccessat(const struct p101_env *env, struct p101_error *err, int fd, const char *path, int amode, int flag);
     int            p101_fchdir(const struct p101_env *env, struct p101_error *err, int fildes);
     int            p101_fchmod(const struct p101_env *env, struct p101_error *err, int fildes, mode_t mode);

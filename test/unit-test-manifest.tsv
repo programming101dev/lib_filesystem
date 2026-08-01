@@ -1,10 +1,12 @@
 function	test_kind	test_source
 p101_access	fault	test/test_fault_wrappers.c
+p101_basename	fault	test/test_fault_wrappers.c
 p101_chdir	fault	test/test_fault_wrappers.c
 p101_chmod	fault	test/test_fault_wrappers.c
 p101_chown	fault	test/test_fault_wrappers.c
 p101_closedir	fault	test/test_fault_wrappers.c
 p101_dirfd	fault	test/test_fault_wrappers.c
+p101_dirname	fault	test/test_fault_wrappers.c
 p101_faccessat	fault	test/test_fault_wrappers.c
 p101_fchdir	fault	test/test_fault_wrappers.c
 p101_fchmod	fault	test/test_fault_wrappers.c
@@ -51,8 +53,6 @@ p101_unlink	fault	test/test_fault_wrappers.c
 p101_unlinkat	fault	test/test_fault_wrappers.c
 p101_utimensat	fault	test/test_fault_wrappers.c
 p101_alphasort	behavior	test/test_behavior.c
-p101_basename	behavior	test/test_behavior.c
-p101_dirname	behavior	test/test_behavior.c
 p101_globfree	behavior	test/test_behavior.c
 p101_rewinddir	behavior	test/test_behavior.c
 p101_seekdir	behavior	test/test_behavior.c
