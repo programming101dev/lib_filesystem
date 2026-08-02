@@ -64,9 +64,9 @@ Whenever practical, finish a change with a receipt the next person can replay:
 
 - `./check.sh` or `./build.sh -q` for an individual C/C++ repo;
 - `./test.sh` for unit tests;
-- `scripts/test-cmake.sh` for shared CMake changes;
+- `scripts/tests/test-cmake.sh` for shared CMake changes;
 - `scripts/check-after-update-all.sh` for the stack-level smoke;
-- `scripts/check-p101-regression-corpus.sh` for behavior claims.
+- `scripts/checks/check-p101-regression-corpus.sh` for behavior claims.
 
 If a useful receipt is too expensive or unavailable, say what was checked and
 what remains unverified.
