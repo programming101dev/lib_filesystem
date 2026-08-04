@@ -22,7 +22,7 @@ int p101_access(const struct p101_env *env, struct p101_error *err, const char *
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = access(path, amode);
 
@@ -31,7 +31,7 @@ int p101_access(const struct p101_env *env, struct p101_error *err, const char *
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -40,7 +40,7 @@ int p101_chdir(const struct p101_env *env, struct p101_error *err, const char *p
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = chdir(path);
 
@@ -49,7 +49,7 @@ int p101_chdir(const struct p101_env *env, struct p101_error *err, const char *p
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -58,7 +58,7 @@ int p101_chown(const struct p101_env *env, struct p101_error *err, const char *p
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = chown(path, owner, group);
 
@@ -67,7 +67,7 @@ int p101_chown(const struct p101_env *env, struct p101_error *err, const char *p
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -76,7 +76,7 @@ int p101_faccessat(const struct p101_env *env, struct p101_error *err, int fd, c
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = faccessat(fd, path, amode, flag);
 
@@ -85,7 +85,7 @@ int p101_faccessat(const struct p101_env *env, struct p101_error *err, int fd, c
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -94,7 +94,7 @@ int p101_fchdir(const struct p101_env *env, struct p101_error *err, int fildes)
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = fchdir(fildes);
 
@@ -103,7 +103,7 @@ int p101_fchdir(const struct p101_env *env, struct p101_error *err, int fildes)
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -112,7 +112,7 @@ int p101_fchown(const struct p101_env *env, struct p101_error *err, int fildes, 
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = fchown(fildes, owner, group);
 
@@ -121,7 +121,7 @@ int p101_fchown(const struct p101_env *env, struct p101_error *err, int fildes, 
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -130,7 +130,7 @@ int p101_fchownat(const struct p101_env *env, struct p101_error *err, int fd, co
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = fchownat(fd, path, owner, group, flag);
 
@@ -139,7 +139,7 @@ int p101_fchownat(const struct p101_env *env, struct p101_error *err, int fd, co
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -148,7 +148,7 @@ long p101_fpathconf(const struct p101_env *env, struct p101_error *err, int fild
     long ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = fpathconf(fildes, name);
 
@@ -157,7 +157,7 @@ long p101_fpathconf(const struct p101_env *env, struct p101_error *err, int fild
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -166,7 +166,7 @@ int p101_ftruncate(const struct p101_env *env, struct p101_error *err, int filde
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = ftruncate(fildes, length);
 
@@ -175,7 +175,7 @@ int p101_ftruncate(const struct p101_env *env, struct p101_error *err, int filde
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -184,7 +184,7 @@ char *p101_getcwd(const struct p101_env *env, struct p101_error *err, char *buf,
     char *ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, NULL);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, NULL);
     errno   = 0;
     ret_val = getcwd(buf, size);
 
@@ -193,7 +193,7 @@ char *p101_getcwd(const struct p101_env *env, struct p101_error *err, char *buf,
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -202,7 +202,7 @@ int p101_lchown(const struct p101_env *env, struct p101_error *err, const char *
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = lchown(path, owner, group);
 
@@ -211,7 +211,7 @@ int p101_lchown(const struct p101_env *env, struct p101_error *err, const char *
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -220,7 +220,7 @@ int p101_link(const struct p101_env *env, struct p101_error *err, const char *pa
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = link(path1, path2);
 
@@ -229,7 +229,7 @@ int p101_link(const struct p101_env *env, struct p101_error *err, const char *pa
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -238,7 +238,7 @@ int p101_linkat(const struct p101_env *env, struct p101_error *err, int fd1, con
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = linkat(fd1, path1, fd2, path2, flag);
 
@@ -247,7 +247,7 @@ int p101_linkat(const struct p101_env *env, struct p101_error *err, int fd1, con
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -256,7 +256,7 @@ long p101_pathconf(const struct p101_env *env, struct p101_error *err, const cha
     long ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = pathconf(path, name);
 
@@ -265,7 +265,7 @@ long p101_pathconf(const struct p101_env *env, struct p101_error *err, const cha
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -274,7 +274,7 @@ ssize_t p101_readlink(const struct p101_env *env, struct p101_error *err, const 
     ssize_t ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, (ssize_t)-1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (ssize_t)-1);
     errno   = 0;
     ret_val = readlink(path, buf, bufsize);
 
@@ -283,7 +283,7 @@ ssize_t p101_readlink(const struct p101_env *env, struct p101_error *err, const 
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -292,7 +292,7 @@ ssize_t p101_readlinkat(const struct p101_env *env, struct p101_error *err, int 
     ssize_t ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, (ssize_t)-1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, (ssize_t)-1);
     errno   = 0;
     ret_val = readlinkat(fd, path, buf, bufsize);
 
@@ -301,7 +301,7 @@ ssize_t p101_readlinkat(const struct p101_env *env, struct p101_error *err, int 
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -310,7 +310,7 @@ int p101_rmdir(const struct p101_env *env, struct p101_error *err, const char *p
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = rmdir(path);
 
@@ -319,7 +319,7 @@ int p101_rmdir(const struct p101_env *env, struct p101_error *err, const char *p
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -328,7 +328,7 @@ int p101_symlink(const struct p101_env *env, struct p101_error *err, const char 
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = symlink(path1, path2);
 
@@ -337,7 +337,7 @@ int p101_symlink(const struct p101_env *env, struct p101_error *err, const char 
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -346,7 +346,7 @@ int p101_symlinkat(const struct p101_env *env, struct p101_error *err, const cha
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = symlinkat(path1, fd, path2);
 
@@ -355,7 +355,7 @@ int p101_symlinkat(const struct p101_env *env, struct p101_error *err, const cha
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -364,7 +364,7 @@ int p101_truncate(const struct p101_env *env, struct p101_error *err, const char
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = truncate(path, length);
 
@@ -373,7 +373,7 @@ int p101_truncate(const struct p101_env *env, struct p101_error *err, const char
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -382,7 +382,7 @@ int p101_unlink(const struct p101_env *env, struct p101_error *err, const char *
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = unlink(path);
 
@@ -391,7 +391,7 @@ int p101_unlink(const struct p101_env *env, struct p101_error *err, const char *
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -400,7 +400,7 @@ int p101_unlinkat(const struct p101_env *env, struct p101_error *err, int fd, co
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = unlinkat(fd, path, flag);
 
@@ -409,6 +409,6 @@ int p101_unlinkat(const struct p101_env *env, struct p101_error *err, int fd, co
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }

@@ -7,7 +7,7 @@ char *p101_basename(const struct p101_env *env, struct p101_error *err, char *pa
     char *ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, NULL);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, NULL);
     errno   = 0;
     ret_val = basename(path);
 
@@ -16,7 +16,7 @@ char *p101_basename(const struct p101_env *env, struct p101_error *err, char *pa
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -25,7 +25,7 @@ char *p101_dirname(const struct p101_env *env, struct p101_error *err, char *pat
     char *ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, NULL);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, NULL);
     errno   = 0;
     ret_val = dirname(path);
 
@@ -34,6 +34,6 @@ char *p101_dirname(const struct p101_env *env, struct p101_error *err, char *pat
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }

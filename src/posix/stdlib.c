@@ -27,7 +27,7 @@ char *p101_mkdtemp(const struct p101_env *env, struct p101_error *err, char *nam
     char *ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, NULL);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, NULL);
     errno   = 0;
     ret_val = mkdtemp(name_template);
 
@@ -36,12 +36,13 @@ char *p101_mkdtemp(const struct p101_env *env, struct p101_error *err, char *nam
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
 int p101_mkstemp(const struct p101_env *env, struct p101_error *err, char *name_template)
 {
+    int p101_single_result_;
     int ret_val;
     int fault;
 
@@ -53,7 +54,8 @@ int p101_mkstemp(const struct p101_env *env, struct p101_error *err, char *name_
         P101_ERROR_RAISE_ERRNO(err, fault);
         P101_TRACE_EXIT(env);
 
-        return -1;
+        p101_single_result_ = -1;
+        goto p101_single_exit_;
     }
 
     errno   = 0;
@@ -70,5 +72,9 @@ int p101_mkstemp(const struct p101_env *env, struct p101_error *err, char *name_
 
     P101_TRACE_EXIT(env);
 
-    return ret_val;
+    p101_single_result_ = ret_val;
+    goto p101_single_exit_;
+
+p101_single_exit_:
+    return p101_single_result_;
 }

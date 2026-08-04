@@ -36,7 +36,7 @@ int p101_closedir(const struct p101_env *env, struct p101_error *err, DIR *dirp)
     int  ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     p101_env_pointer_resource_id(resource_id, sizeof(resource_id), dirp);
     fd      = dirfd(dirp);
     errno   = 0;
@@ -56,7 +56,7 @@ int p101_closedir(const struct p101_env *env, struct p101_error *err, DIR *dirp)
         P101_TRACK_RESOURCE_RELEASE(env, "directory-stream", resource_id, NULL);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -65,7 +65,7 @@ int p101_dirfd(const struct p101_env *env, struct p101_error *err, DIR *dirp)
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = dirfd(dirp);
 
@@ -74,7 +74,7 @@ int p101_dirfd(const struct p101_env *env, struct p101_error *err, DIR *dirp)
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -83,7 +83,7 @@ DIR *p101_fdopendir(const struct p101_env *env, struct p101_error *err, int fd)
     DIR *ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, NULL);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, NULL);
     errno   = 0;
     ret_val = fdopendir(fd);
 
@@ -96,7 +96,7 @@ DIR *p101_fdopendir(const struct p101_env *env, struct p101_error *err, int fd)
         P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "directory-stream", ret_val, 0U, "fdopendir");
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -105,7 +105,7 @@ DIR *p101_opendir(const struct p101_env *env, struct p101_error *err, const char
     DIR *ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, NULL);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, NULL);
     errno   = 0;
     ret_val = opendir(dirname);
 
@@ -125,7 +125,7 @@ DIR *p101_opendir(const struct p101_env *env, struct p101_error *err, const char
         P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "directory-stream", ret_val, 0U, dirname);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -134,7 +134,7 @@ struct dirent *p101_readdir(const struct p101_env *env, struct p101_error *err, 
     struct dirent *ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, NULL);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, NULL);
     errno   = 0;
     ret_val = readdir(dirp);    // cppcheck-suppress readdirCalled
 
@@ -143,7 +143,7 @@ struct dirent *p101_readdir(const struct p101_env *env, struct p101_error *err, 
         P101_ERROR_RAISE_ERRNO(err, errno);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 
@@ -161,7 +161,7 @@ int p101_scandir(const struct p101_env *env, struct p101_error *err, const char 
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, -1);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     errno   = 0;
     ret_val = scandir(dir, namelist, sel, compar);
 
@@ -181,6 +181,6 @@ int p101_scandir(const struct p101_env *env, struct p101_error *err, const char 
         }
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }

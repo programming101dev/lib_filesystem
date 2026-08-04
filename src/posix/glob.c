@@ -23,7 +23,7 @@ int p101_glob(const struct p101_env *env, struct p101_error *err, const char *re
     int ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN_SYSTEM_CODE(env, err);
+    P101_WRAPPER_FAULT_RETURN_SYSTEM_CODE(env, err, ret_val);
     errno   = 0;
     ret_val = glob(pattern, flags, errfunc, pglob);
 
@@ -47,7 +47,7 @@ int p101_glob(const struct p101_env *env, struct p101_error *err, const char *re
         P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "glob-result", pglob, 0U, NULL);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }
 

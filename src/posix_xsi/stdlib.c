@@ -9,7 +9,7 @@ char *p101_realpath(const struct p101_env *env, struct p101_error *err, const ch
     char *ret_val;
 
     P101_TRACE(env);
-    P101_WRAPPER_FAULT_RETURN(env, err, NULL);
+    P101_WRAPPER_FAULT_RETURN(env, err, ret_val, NULL);
     errno   = 0;
     ret_val = realpath(file_name, resolved_name);
 
@@ -22,6 +22,6 @@ char *p101_realpath(const struct p101_env *env, struct p101_error *err, const ch
         P101_TRACK_ALLOC(env, ret_val, p101_strlen(env, ret_val) + 1U);
     }
 
-    P101_TRACE_EXIT(env);
+    P101_WRAPPER_DONE(env);
     return ret_val;
 }

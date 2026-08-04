@@ -119,8 +119,8 @@ static void count_resource_event(const struct p101_env *env, p101_env_resource_k
 static void test_p101_access(struct p101_env *env, struct p101_error *err)
 {
 #ifdef __linux__
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EACCES, EINVAL, ELOOP, ENAMETOOLONG, ENOENT, ENOTDIR, EROFS, ETXTBSY};
+    static const char *const error_names[] = {"EACCES", "EINVAL", "ELOOP", "ENAMETOOLONG", "ENOENT", "ENOTDIR", "EROFS", "ETXTBSY"};
 #elif defined(__APPLE__)
     static const int         errors[]      = {EACCES, EFAULT, EINVAL, EIO, ELOOP, ENAMETOOLONG, ENOENT, ENOTDIR, EROFS, ETXTBSY};
     static const char *const error_names[] = {"EACCES", "EFAULT", "EINVAL", "EIO", "ELOOP", "ENAMETOOLONG", "ENOENT", "ENOTDIR", "EROFS", "ETXTBSY"};
@@ -367,8 +367,8 @@ static void test_p101_dirfd(struct p101_env *env, struct p101_error *err)
     static const int         errors[]      = {EINVAL, ENOTSUP};
     static const char *const error_names[] = {"EINVAL", "ENOTSUP"};
 #elif defined(__APPLE__)
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EINVAL, EMFILE, ENFILE};
+    static const char *const error_names[] = {"EINVAL", "EMFILE", "ENFILE"};
 #elif defined(__FreeBSD__)
     static const int         errors[]      = {EINVAL};
     static const char *const error_names[] = {"EINVAL"};
@@ -529,8 +529,8 @@ static void test_p101_fchdir(struct p101_env *env, struct p101_error *err)
 static void test_p101_fchmod(struct p101_env *env, struct p101_error *err)
 {
 #ifdef __linux__
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EBADF, EINTR, EINVAL, EPERM, EROFS};
+    static const char *const error_names[] = {"EBADF", "EINTR", "EINVAL", "EPERM", "EROFS"};
 #elif defined(__APPLE__)
     static const int         errors[]      = {EBADF, EINTR, EINVAL, EIO, EPERM, EROFS};
     static const char *const error_names[] = {"EBADF", "EINTR", "EINVAL", "EIO", "EPERM", "EROFS"};
@@ -569,8 +569,8 @@ static void test_p101_fchmod(struct p101_env *env, struct p101_error *err)
 static void test_p101_fchmodat(struct p101_env *env, struct p101_error *err)
 {
 #ifdef __linux__
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EACCES, EBADF, EINTR, EINVAL, ELOOP, ENAMETOOLONG, ENOENT, ENOTDIR, EOPNOTSUPP, EPERM, EROFS};
+    static const char *const error_names[] = {"EACCES", "EBADF", "EINTR", "EINVAL", "ELOOP", "ENAMETOOLONG", "ENOENT", "ENOTDIR", "EOPNOTSUPP", "EPERM", "EROFS"};
 #elif defined(__APPLE__)
     static const int         errors[]      = {EBADF, EINVAL, ENOTDIR};
     static const char *const error_names[] = {"EBADF", "EINVAL", "ENOTDIR"};
@@ -609,8 +609,8 @@ static void test_p101_fchmodat(struct p101_env *env, struct p101_error *err)
 static void test_p101_fchown(struct p101_env *env, struct p101_error *err)
 {
 #ifdef __linux__
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EBADF, EINTR, EINVAL, EIO, EPERM, EROFS};
+    static const char *const error_names[] = {"EBADF", "EINTR", "EINVAL", "EIO", "EPERM", "EROFS"};
 #elif defined(__APPLE__)
     static const int         errors[]      = {EBADF, EINTR, EINVAL, EIO, EPERM, EROFS};
     static const char *const error_names[] = {"EBADF", "EINTR", "EINVAL", "EIO", "EPERM", "EROFS"};
@@ -649,8 +649,8 @@ static void test_p101_fchown(struct p101_env *env, struct p101_error *err)
 static void test_p101_fchownat(struct p101_env *env, struct p101_error *err)
 {
 #ifdef __linux__
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EACCES, EBADF, EINTR, EINVAL, EIO, ELOOP, ENAMETOOLONG, ENOENT, ENOTDIR, EPERM, EROFS};
+    static const char *const error_names[] = {"EACCES", "EBADF", "EINTR", "EINVAL", "EIO", "ELOOP", "ENAMETOOLONG", "ENOENT", "ENOTDIR", "EPERM", "EROFS"};
 #elif defined(__APPLE__)
     static const int         errors[]      = {EBADF, EINTR, EINVAL, EIO, ENOTDIR, EPERM, EROFS};
     static const char *const error_names[] = {"EBADF", "EINTR", "EINVAL", "EIO", "ENOTDIR", "EPERM", "EROFS"};
@@ -809,8 +809,8 @@ static void test_p101_fpathconf(struct p101_env *env, struct p101_error *err)
 static void test_p101_fstat(struct p101_env *env, struct p101_error *err)
 {
 #ifdef __linux__
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EBADF, EIO, EOVERFLOW};
+    static const char *const error_names[] = {"EBADF", "EIO", "EOVERFLOW"};
 #elif defined(__APPLE__)
     static const int         errors[]      = {EBADF, EFAULT, EIO, EOVERFLOW};
     static const char *const error_names[] = {"EBADF", "EFAULT", "EIO", "EOVERFLOW"};
@@ -1055,8 +1055,8 @@ static void test_p101_getcwd(struct p101_env *env, struct p101_error *err)
     memset(argument_2, 0xA5, sizeof(argument_2));
     memcpy(argument_2_before, argument_2, sizeof(argument_2));
 #ifdef __linux__
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EACCES, EINVAL, ENOMEM, ERANGE};
+    static const char *const error_names[] = {"EACCES", "EINVAL", "ENOMEM", "ERANGE"};
 #elif defined(__APPLE__)
     static const int         errors[]      = {EACCES, EINVAL, ENOENT, ENOMEM, ERANGE};
     static const char *const error_names[] = {"EACCES", "EINVAL", "ENOENT", "ENOMEM", "ERANGE"};
@@ -1141,8 +1141,8 @@ static void test_p101_glob(struct p101_env *env, struct p101_error *err)
 static void test_p101_lchown(struct p101_env *env, struct p101_error *err)
 {
 #ifdef __linux__
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EACCES, EINTR, EINVAL, EIO, ELOOP, ENAMETOOLONG, ENOENT, ENOTDIR, EPERM, EROFS};
+    static const char *const error_names[] = {"EACCES", "EINTR", "EINVAL", "EIO", "ELOOP", "ENAMETOOLONG", "ENOENT", "ENOTDIR", "EPERM", "EROFS"};
 #elif defined(__APPLE__)
     static const int         errors[]      = {EACCES, EBADF, EFAULT, EINTR, EINVAL, EIO, ELOOP, ENAMETOOLONG, ENOENT, ENOTDIR, EPERM, EROFS};
     static const char *const error_names[] = {"EACCES", "EBADF", "EFAULT", "EINTR", "EINVAL", "EIO", "ELOOP", "ENAMETOOLONG", "ENOENT", "ENOTDIR", "EPERM", "EROFS"};
@@ -1261,8 +1261,8 @@ static void test_p101_linkat(struct p101_env *env, struct p101_error *err)
 static void test_p101_lstat(struct p101_env *env, struct p101_error *err)
 {
 #ifdef __linux__
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EACCES, EIO, ELOOP, ENAMETOOLONG, ENOENT, ENOTDIR, EOVERFLOW};
+    static const char *const error_names[] = {"EACCES", "EIO", "ELOOP", "ENAMETOOLONG", "ENOENT", "ENOTDIR", "EOVERFLOW"};
 #elif defined(__APPLE__)
     static const int         errors[]      = {EACCES, EBADF, EFAULT, EINVAL, EIO, ELOOP, ENAMETOOLONG, ENOENT, ENOTDIR, EOVERFLOW};
     static const char *const error_names[] = {"EACCES", "EBADF", "EFAULT", "EINVAL", "EIO", "ELOOP", "ENAMETOOLONG", "ENOENT", "ENOTDIR", "EOVERFLOW"};
@@ -1301,8 +1301,8 @@ static void test_p101_lstat(struct p101_env *env, struct p101_error *err)
 static void test_p101_mkdir(struct p101_env *env, struct p101_error *err)
 {
 #ifdef __linux__
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EACCES, EEXIST, EILSEQ, ELOOP, EMLINK, ENAMETOOLONG, ENOENT, ENOSPC, ENOTDIR, EROFS};
+    static const char *const error_names[] = {"EACCES", "EEXIST", "EILSEQ", "ELOOP", "EMLINK", "ENAMETOOLONG", "ENOENT", "ENOSPC", "ENOTDIR", "EROFS"};
 #elif defined(__APPLE__)
     static const int         errors[]      = {EACCES, EBADF, EDQUOT, EEXIST, EFAULT, EILSEQ, EIO, EISDIR, ELOOP, EMLINK, ENAMETOOLONG, ENOENT, ENOSPC, ENOTDIR, EROFS};
     static const char *const error_names[] = {"EACCES", "EBADF", "EDQUOT", "EEXIST", "EFAULT", "EILSEQ", "EIO", "EISDIR", "ELOOP", "EMLINK", "ENAMETOOLONG", "ENOENT", "ENOSPC", "ENOTDIR", "EROFS"};
@@ -1512,8 +1512,8 @@ static void test_p101_mkstemp(struct p101_env *env, struct p101_error *err)
 static void test_p101_nftw(struct p101_env *env, struct p101_error *err)
 {
 #ifdef __linux__
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EACCES, ELOOP, EMFILE, ENAMETOOLONG, ENFILE, ENOENT, ENOTDIR, EOVERFLOW};
+    static const char *const error_names[] = {"EACCES", "ELOOP", "EMFILE", "ENAMETOOLONG", "ENFILE", "ENOENT", "ENOTDIR", "EOVERFLOW"};
 #elif defined(__APPLE__)
     static const int         errors[]      = {EACCES, EAGAIN, EBADF, EDEADLK, EDQUOT, EEXIST, EFAULT, EILSEQ, EINTR, EINVAL, EIO, EISDIR, ELOOP, EMFILE, ENAMETOOLONG, ENFILE, ENOENT, ENOSPC, ENOTDIR, ENXIO, EOPNOTSUPP, EOVERFLOW, EROFS, ETXTBSY, EWOULDBLOCK};
     static const char *const error_names[] = {"EACCES", "EAGAIN",       "EBADF",  "EDEADLK", "EDQUOT", "EEXIST",  "EFAULT", "EILSEQ",     "EINTR",     "EINVAL", "EIO",     "EISDIR",     "ELOOP",
@@ -1637,11 +1637,11 @@ static void test_p101_readdir(struct p101_env *env, struct p101_error *err)
     static const int         errors[]      = {EBADF, EFAULT, EINVAL, ENOENT, ENOTDIR};
     static const char *const error_names[] = {"EBADF", "EFAULT", "EINVAL", "ENOENT", "ENOTDIR"};
 #elif defined(__APPLE__)
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EBADF, ENOENT, ENOMEM, EOVERFLOW};
+    static const char *const error_names[] = {"EBADF", "ENOENT", "ENOMEM", "EOVERFLOW"};
 #elif defined(__FreeBSD__)
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EBADF, ENOENT, ENOMEM, EOVERFLOW};
+    static const char *const error_names[] = {"EBADF", "ENOENT", "ENOMEM", "EOVERFLOW"};
 #else
     static const int         errors[]      = {EBADF, ENOENT, ENOMEM, EOVERFLOW};
     static const char *const error_names[] = {"EBADF", "ENOENT", "ENOMEM", "EOVERFLOW"};
@@ -1678,8 +1678,8 @@ static void test_p101_readlink(struct p101_env *env, struct p101_error *err)
     memset(argument_3, 0xA5, sizeof(argument_3));
     memcpy(argument_3_before, argument_3, sizeof(argument_3));
 #ifdef __linux__
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EACCES, EINVAL, EIO, ELOOP, ENAMETOOLONG, ENOENT, ENOTDIR};
+    static const char *const error_names[] = {"EACCES", "EINVAL", "EIO", "ELOOP", "ENAMETOOLONG", "ENOENT", "ENOTDIR"};
 #elif defined(__APPLE__)
     static const int         errors[]      = {EACCES, EBADF, EFAULT, EINVAL, EIO, ELOOP, ENAMETOOLONG, ENOENT, ENOTDIR};
     static const char *const error_names[] = {"EACCES", "EBADF", "EFAULT", "EINVAL", "EIO", "ELOOP", "ENAMETOOLONG", "ENOENT", "ENOTDIR"};
@@ -1815,8 +1815,8 @@ static void test_p101_renameat(struct p101_env *env, struct p101_error *err)
     static const int         errors[]      = {EBADF, ENOTDIR};
     static const char *const error_names[] = {"EBADF", "ENOTDIR"};
 #elif defined(__FreeBSD__)
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EACCES, EBADF, EBUSY, EEXIST, EILSEQ, EINVAL, EIO, EISDIR, ELOOP, EMLINK, ENAMETOOLONG, ENOENT, ENOSPC, ENOTDIR, ENOTEMPTY, EPERM, EROFS, ETXTBSY, EXDEV};
+    static const char *const error_names[] = {"EACCES", "EBADF", "EBUSY", "EEXIST", "EILSEQ", "EINVAL", "EIO", "EISDIR", "ELOOP", "EMLINK", "ENAMETOOLONG", "ENOENT", "ENOSPC", "ENOTDIR", "ENOTEMPTY", "EPERM", "EROFS", "ETXTBSY", "EXDEV"};
 #else
     static const int         errors[]      = {EACCES, EBADF, EBUSY, EEXIST, EILSEQ, EINVAL, EIO, EISDIR, ELOOP, EMLINK, ENAMETOOLONG, ENOENT, ENOSPC, ENOTDIR, ENOTEMPTY, EPERM, EROFS, ETXTBSY, EXDEV};
     static const char *const error_names[] = {"EACCES", "EBADF", "EBUSY", "EEXIST", "EILSEQ", "EINVAL", "EIO", "EISDIR", "ELOOP", "EMLINK", "ENAMETOOLONG", "ENOENT", "ENOSPC", "ENOTDIR", "ENOTEMPTY", "EPERM", "EROFS", "ETXTBSY", "EXDEV"};
@@ -1889,8 +1889,8 @@ static void test_p101_rmdir(struct p101_env *env, struct p101_error *err)
 static void test_p101_scandir(struct p101_env *env, struct p101_error *err)
 {
 #ifdef __linux__
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EACCES, ELOOP, EMFILE, ENAMETOOLONG, ENFILE, ENOENT, ENOMEM, ENOTDIR, EOVERFLOW};
+    static const char *const error_names[] = {"EACCES", "ELOOP", "EMFILE", "ENAMETOOLONG", "ENFILE", "ENOENT", "ENOMEM", "ENOTDIR", "EOVERFLOW"};
 #elif defined(__APPLE__)
     static const int         errors[]      = {EACCES, EBADF, EINTR, EIO, ELOOP, ENAMETOOLONG, ENOENT, ENOTDIR};
     static const char *const error_names[] = {"EACCES", "EBADF", "EINTR", "EIO", "ELOOP", "ENAMETOOLONG", "ENOENT", "ENOTDIR"};
@@ -2009,8 +2009,8 @@ static void test_p101_statvfs(struct p101_env *env, struct p101_error *err)
 static void test_p101_symlink(struct p101_env *env, struct p101_error *err)
 {
 #ifdef __linux__
-    static const int         errors[]      = {EIO};
-    static const char *const error_names[] = {"EIO"};
+    static const int         errors[]      = {EACCES, EEXIST, EILSEQ, EIO, ELOOP, ENAMETOOLONG, ENOENT, ENOSPC, ENOTDIR, EROFS};
+    static const char *const error_names[] = {"EACCES", "EEXIST", "EILSEQ", "EIO", "ELOOP", "ENAMETOOLONG", "ENOENT", "ENOSPC", "ENOTDIR", "EROFS"};
 #elif defined(__APPLE__)
     static const int         errors[]      = {EACCES, EBADF, EDQUOT, EEXIST, EFAULT, EILSEQ, EIO, ELOOP, ENAMETOOLONG, ENOENT, ENOSPC, ENOTDIR, EROFS};
     static const char *const error_names[] = {"EACCES", "EBADF", "EDQUOT", "EEXIST", "EFAULT", "EILSEQ", "EIO", "ELOOP", "ENAMETOOLONG", "ENOENT", "ENOSPC", "ENOTDIR", "EROFS"};
