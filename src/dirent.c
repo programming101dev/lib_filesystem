@@ -42,8 +42,6 @@
  * limitations under the License.
  */
 
-#include <p101_env/wrapper.h>
-
 int p101_alphasort(const struct p101_env *env, const struct dirent **d1, const struct dirent **d2)
 {
     int ret_val;
