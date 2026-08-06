@@ -19,10 +19,28 @@ set(BSD_STANDARD_FLAGS -D_BSD_SOURCE -D__BSD_VISIBLE)
 
 set(LIBRARY_TARGETS p101_filesystem)
 set(p101_filesystem_SOURCES
-        src/filesystem.c
+        src/dirent.c
+        src/fnmatch.c
+        src/ftw.c
+        src/glob.c
+        src/libgen.c
+        src/stdio.c
+        src/stdlib.c
+        src/sys/stat.c
+        src/sys/statvfs.c
+        src/unistd.c
 )
 set(p101_filesystem_HEADERS
-        include/p101_filesystem/filesystem.h
+        include/p101_filesystem/p101_dirent.h
+        include/p101_filesystem/p101_fnmatch.h
+        include/p101_filesystem/p101_ftw.h
+        include/p101_filesystem/p101_glob.h
+        include/p101_filesystem/p101_libgen.h
+        include/p101_filesystem/p101_stdio.h
+        include/p101_filesystem/p101_stdlib.h
+        include/p101_filesystem/p101_unistd.h
+        include/p101_filesystem/sys/p101_stat.h
+        include/p101_filesystem/sys/p101_statvfs.h
 )
 set(p101_filesystem_LINK_LIBRARIES
         p101_error
