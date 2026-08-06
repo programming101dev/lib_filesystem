@@ -6,6 +6,9 @@ The public API is the intersection implemented on Linux, macOS, and FreeBSD.
 POSIX, XSI, optional-POSIX, and common-Unix origins are recorded in
 `api-manifest.tsv`; provenance does not determine ownership.
 
+The maintained implementation is deliberately one public header and one source
+file. Standards origin is not part of the source-tree architecture.
+
 ## Build and verification
 
 ```sh

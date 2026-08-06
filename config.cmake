@@ -19,20 +19,7 @@ set(BSD_STANDARD_FLAGS -D_BSD_SOURCE -D__BSD_VISIBLE)
 
 set(LIBRARY_TARGETS p101_filesystem)
 set(p101_filesystem_SOURCES
-        src/posix/dirent.c
-        src/posix/fnmatch.c
-        src/posix/glob.c
-        src/posix/stdio.c
-        src/posix/stdlib.c
-        src/posix/sys/stat.c
-        src/posix/sys/statvfs.c
-        src/posix/unistd.c
-        src/posix_xsi/dirent.c
-        src/posix_xsi/ftw.c
-        src/posix_xsi/libgen.c
-        src/posix_xsi/stdlib.c
-        src/posix_xsi/sys/stat.c
-        src/posix_xsi/unistd.c
+        src/filesystem.c
 )
 set(p101_filesystem_HEADERS
         include/p101_filesystem/filesystem.h

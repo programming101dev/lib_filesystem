@@ -1,60 +1,60 @@
-function	test_kind	test_source
-p101_access	fault	test/test_fault_wrappers.c
-p101_basename	fault	test/test_fault_wrappers.c
-p101_chdir	fault	test/test_fault_wrappers.c
-p101_chmod	fault	test/test_fault_wrappers.c
-p101_chown	fault	test/test_fault_wrappers.c
-p101_closedir	fault	test/test_fault_wrappers.c
-p101_dirfd	fault	test/test_fault_wrappers.c
-p101_dirname	fault	test/test_fault_wrappers.c
-p101_faccessat	fault	test/test_fault_wrappers.c
-p101_fchdir	fault	test/test_fault_wrappers.c
-p101_fchmod	fault	test/test_fault_wrappers.c
-p101_fchmodat	fault	test/test_fault_wrappers.c
-p101_fchown	fault	test/test_fault_wrappers.c
-p101_fchownat	fault	test/test_fault_wrappers.c
-p101_fdopendir	fault	test/test_fault_wrappers.c
-p101_fnmatch	fault	test/test_fault_wrappers.c
-p101_fpathconf	fault	test/test_fault_wrappers.c
-p101_fstat	fault	test/test_fault_wrappers.c
-p101_fstatat	fault	test/test_fault_wrappers.c
-p101_fstatvfs	fault	test/test_fault_wrappers.c
-p101_ftruncate	fault	test/test_fault_wrappers.c
-p101_ftw	fault	test/test_fault_wrappers.c
-p101_futimens	fault	test/test_fault_wrappers.c
-p101_getcwd	fault	test/test_fault_wrappers.c
-p101_glob	fault	test/test_fault_wrappers.c
-p101_lchown	fault	test/test_fault_wrappers.c
-p101_link	fault	test/test_fault_wrappers.c
-p101_linkat	fault	test/test_fault_wrappers.c
-p101_lstat	fault	test/test_fault_wrappers.c
-p101_mkdir	fault	test/test_fault_wrappers.c
-p101_mkdirat	fault	test/test_fault_wrappers.c
-p101_mkdtemp	fault	test/test_fault_wrappers.c
-p101_mknod	fault	test/test_fault_wrappers.c
-p101_mkstemp	fault	test/test_fault_wrappers.c
-p101_nftw	fault	test/test_fault_wrappers.c
-p101_opendir	fault	test/test_fault_wrappers.c
-p101_pathconf	fault	test/test_fault_wrappers.c
-p101_readdir	fault	test/test_fault_wrappers.c
-p101_readlink	fault	test/test_fault_wrappers.c
-p101_readlinkat	fault	test/test_fault_wrappers.c
-p101_realpath	fault	test/test_fault_wrappers.c
-p101_renameat	fault	test/test_fault_wrappers.c
-p101_rmdir	fault	test/test_fault_wrappers.c
-p101_scandir	fault	test/test_fault_wrappers.c
-p101_stat	fault	test/test_fault_wrappers.c
-p101_statvfs	fault	test/test_fault_wrappers.c
-p101_symlink	fault	test/test_fault_wrappers.c
-p101_symlinkat	fault	test/test_fault_wrappers.c
-p101_telldir	fault	test/test_fault_wrappers.c
-p101_truncate	fault	test/test_fault_wrappers.c
-p101_unlink	fault	test/test_fault_wrappers.c
-p101_unlinkat	fault	test/test_fault_wrappers.c
-p101_utimensat	fault	test/test_fault_wrappers.c
-p101_alphasort	behavior	test/test_behavior.c
-p101_globfree	behavior	test/test_behavior.c
-p101_rewinddir	behavior	test/test_behavior.c
-p101_seekdir	behavior	test/test_behavior.c
-p101_sync	behavior	test/test_behavior.c
-p101_umask	behavior	test/test_behavior.c
+function	function_usr	test_kind	test_source
+p101_access	c:@F@p101_access	fault	test/test_fault_wrappers.c
+p101_basename	c:@F@p101_basename	fault	test/test_fault_wrappers.c
+p101_chdir	c:@F@p101_chdir	fault	test/test_fault_wrappers.c
+p101_chmod	c:@F@p101_chmod	fault	test/test_fault_wrappers.c
+p101_chown	c:@F@p101_chown	fault	test/test_fault_wrappers.c
+p101_closedir	c:@F@p101_closedir	fault	test/test_fault_wrappers.c
+p101_dirfd	c:@F@p101_dirfd	fault	test/test_fault_wrappers.c
+p101_dirname	c:@F@p101_dirname	fault	test/test_fault_wrappers.c
+p101_faccessat	c:@F@p101_faccessat	fault	test/test_fault_wrappers.c
+p101_fchdir	c:@F@p101_fchdir	fault	test/test_fault_wrappers.c
+p101_fchmod	c:@F@p101_fchmod	fault	test/test_fault_wrappers.c
+p101_fchmodat	c:@F@p101_fchmodat	fault	test/test_fault_wrappers.c
+p101_fchown	c:@F@p101_fchown	fault	test/test_fault_wrappers.c
+p101_fchownat	c:@F@p101_fchownat	fault	test/test_fault_wrappers.c
+p101_fdopendir	c:@F@p101_fdopendir	fault	test/test_fault_wrappers.c
+p101_fnmatch	c:@F@p101_fnmatch	fault	test/test_fault_wrappers.c
+p101_fpathconf	c:@F@p101_fpathconf	fault	test/test_fault_wrappers.c
+p101_fstat	c:@F@p101_fstat	fault	test/test_fault_wrappers.c
+p101_fstatat	c:@F@p101_fstatat	fault	test/test_fault_wrappers.c
+p101_fstatvfs	c:@F@p101_fstatvfs	fault	test/test_fault_wrappers.c
+p101_ftruncate	c:@F@p101_ftruncate	fault	test/test_fault_wrappers.c
+p101_ftw	c:@F@p101_ftw	fault	test/test_fault_wrappers.c
+p101_futimens	c:@F@p101_futimens	fault	test/test_fault_wrappers.c
+p101_getcwd	c:@F@p101_getcwd	fault	test/test_fault_wrappers.c
+p101_glob	c:@F@p101_glob	fault	test/test_fault_wrappers.c
+p101_lchown	c:@F@p101_lchown	fault	test/test_fault_wrappers.c
+p101_link	c:@F@p101_link	fault	test/test_fault_wrappers.c
+p101_linkat	c:@F@p101_linkat	fault	test/test_fault_wrappers.c
+p101_lstat	c:@F@p101_lstat	fault	test/test_fault_wrappers.c
+p101_mkdir	c:@F@p101_mkdir	fault	test/test_fault_wrappers.c
+p101_mkdirat	c:@F@p101_mkdirat	fault	test/test_fault_wrappers.c
+p101_mkdtemp	c:@F@p101_mkdtemp	fault	test/test_fault_wrappers.c
+p101_mknod	c:@F@p101_mknod	fault	test/test_fault_wrappers.c
+p101_mkstemp	c:@F@p101_mkstemp	fault	test/test_fault_wrappers.c
+p101_nftw	c:@F@p101_nftw	fault	test/test_fault_wrappers.c
+p101_opendir	c:@F@p101_opendir	fault	test/test_fault_wrappers.c
+p101_pathconf	c:@F@p101_pathconf	fault	test/test_fault_wrappers.c
+p101_readdir	c:@F@p101_readdir	fault	test/test_fault_wrappers.c
+p101_readlink	c:@F@p101_readlink	fault	test/test_fault_wrappers.c
+p101_readlinkat	c:@F@p101_readlinkat	fault	test/test_fault_wrappers.c
+p101_realpath	c:@F@p101_realpath	fault	test/test_fault_wrappers.c
+p101_renameat	c:@F@p101_renameat	fault	test/test_fault_wrappers.c
+p101_rmdir	c:@F@p101_rmdir	fault	test/test_fault_wrappers.c
+p101_scandir	c:@F@p101_scandir	fault	test/test_fault_wrappers.c
+p101_stat	c:@F@p101_stat	fault	test/test_fault_wrappers.c
+p101_statvfs	c:@F@p101_statvfs	fault	test/test_fault_wrappers.c
+p101_symlink	c:@F@p101_symlink	fault	test/test_fault_wrappers.c
+p101_symlinkat	c:@F@p101_symlinkat	fault	test/test_fault_wrappers.c
+p101_telldir	c:@F@p101_telldir	fault	test/test_fault_wrappers.c
+p101_truncate	c:@F@p101_truncate	fault	test/test_fault_wrappers.c
+p101_unlink	c:@F@p101_unlink	fault	test/test_fault_wrappers.c
+p101_unlinkat	c:@F@p101_unlinkat	fault	test/test_fault_wrappers.c
+p101_utimensat	c:@F@p101_utimensat	fault	test/test_fault_wrappers.c
+p101_alphasort	c:@F@p101_alphasort	behavior	test/test_behavior.c
+p101_globfree	c:@F@p101_globfree	behavior	test/test_behavior.c
+p101_rewinddir	c:@F@p101_rewinddir	behavior	test/test_behavior.c
+p101_seekdir	c:@F@p101_seekdir	behavior	test/test_behavior.c
+p101_sync	c:@F@p101_sync	behavior	test/test_behavior.c
+p101_umask	c:@F@p101_umask	behavior	test/test_behavior.c

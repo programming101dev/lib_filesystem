@@ -23,6 +23,7 @@
 #include <unistd.h>
 
 typedef int (*p101_ftw_fn)(const char *fpath, const struct stat *sb, int typeflag);
+typedef int (*p101_nftw_fn)(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf);
 
 #ifdef __cplusplus
 extern "C"
@@ -65,7 +66,7 @@ extern "C"
     char          *p101_mkdtemp(const struct p101_env *env, struct p101_error *err, char *name_template);
     int            p101_mknod(const struct p101_env *env, struct p101_error *err, const char *path, mode_t mode, dev_t dev);
     int            p101_mkstemp(const struct p101_env *env, struct p101_error *err, char *name_template);
-    int            p101_nftw(const struct p101_env *env, struct p101_error *err, const char *path, int (*fn)(const char *, const struct stat *, int, struct FTW *), int fd_limit, int flags);
+    int            p101_nftw(const struct p101_env *env, struct p101_error *err, const char *path, p101_nftw_fn fn, int fd_limit, int flags);
     DIR           *p101_opendir(const struct p101_env *env, struct p101_error *err, const char *dirname) P101_ATTR_WARN_UNUSED_RESULT;
     long           p101_pathconf(const struct p101_env *env, struct p101_error *err, const char *path, int name);
     struct dirent *p101_readdir(const struct p101_env *env, struct p101_error *err, DIR *dirp);
