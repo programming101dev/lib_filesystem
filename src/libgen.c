@@ -18,6 +18,19 @@
 #include <libgen.h>
 #include <p101_env/wrapper.h>
 
+/*
+ * These wrappers want the POSIX basename from <libgen.h>, which takes char *
+ * and may modify the path in place. glibc's <string.h> declares a different
+ * GNU basename under _GNU_SOURCE that takes const char * and never modifies
+ * its argument; the fact analyzers parse this file with _GNU_SOURCE on Linux.
+ * <libgen.h> resolves this by defining basename as __xpg_basename, so its
+ * absence means the GNU declaration won and p101_basename would silently
+ * stop modifying the caller's buffer. Fail loudly instead.
+ */
+#if defined(__GLIBC__) && !defined(basename)
+#error "glibc: POSIX basename from <libgen.h> is not in effect; check include order"
+#endif
+
 char *p101_basename(const struct p101_env *env, struct p101_error *err, char *path)
 {
     char *ret_val;
