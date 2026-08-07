@@ -48,6 +48,7 @@ int p101_alphasort(const struct p101_env *env, const struct dirent **d1, const s
 int p101_closedir(const struct p101_env *env, struct p101_error *err, DIR *dirp)
 {
     char resource_id[P101_ENV_POINTER_RESOURCE_ID_SIZE];
+    bool fd_error;
     int  fd;
     int  ret_val;
 
@@ -56,33 +57,34 @@ int p101_closedir(const struct p101_env *env, struct p101_error *err, DIR *dirp)
     p101_env_pointer_resource_id(resource_id, sizeof(resource_id), dirp);
 
     /*
-     * The descriptor is only used to decide what to untrack, so a failure to
-     * obtain it is not this call's failure: take it through the wrapper, then
-     * clear the error and fall back to the stream-only release below.
+     * The descriptor decides what to untrack. Take it through the wrapper
+     * and keep any failure it raises: the stream is still closed below, so
+     * nothing leaks, and the failure reports once closedir's own outcome is
+     * known. When both fail, the first error wins.
      */
-    fd = p101_dirfd(env, err, dirp);
-
-    if(p101_error_has_error(err))
-    {
-        p101_error_reset(err);
-        fd = -1;
-    }
-
-    errno   = 0;
-    ret_val = closedir(dirp);
+    fd       = p101_dirfd(env, err, dirp);
+    fd_error = p101_error_has_error(err);
+    errno    = 0;
+    ret_val  = closedir(dirp);
 
     if(ret_val == -1)
     {
-        P101_ERROR_RAISE_ERRNO(err, errno);
-    }
-    else if(fd >= 0)
-    {
-        P101_TRACK_CLOSE(env, fd);
-        P101_TRACK_RESOURCE_RELEASE(env, "directory-stream", resource_id, NULL);
+        if(!fd_error)
+        {
+            P101_ERROR_RAISE_ERRNO(err, errno);
+        }
     }
     else
     {
+        if(fd >= 0)
+        {
+            P101_TRACK_CLOSE(env, fd);
+        }
         P101_TRACK_RESOURCE_RELEASE(env, "directory-stream", resource_id, NULL);
+        if(fd_error)
+        {
+            ret_val = -1;
+        }
     }
 
     P101_WRAPPER_DONE(env);
