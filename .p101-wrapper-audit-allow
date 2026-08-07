@@ -1,4 +1,2 @@
-# Native descriptor queries preserve the directory stream's single wrapper
-# boundary. Tree-walk callbacks are application-owned indirect calls.
-src/dirent.c		c:@F@dirfd
+# Tree-walk callbacks are application-owned indirect calls.
 src/ftw.c		c:@T@p101_nftw_fn

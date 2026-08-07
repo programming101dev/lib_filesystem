@@ -54,7 +54,20 @@ int p101_closedir(const struct p101_env *env, struct p101_error *err, DIR *dirp)
     P101_TRACE(env);
     P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
     p101_env_pointer_resource_id(resource_id, sizeof(resource_id), dirp);
-    fd      = dirfd(dirp);
+
+    /*
+     * The descriptor is only used to decide what to untrack, so a failure to
+     * obtain it is not this call's failure: take it through the wrapper, then
+     * clear the error and fall back to the stream-only release below.
+     */
+    fd = p101_dirfd(env, err, dirp);
+
+    if(p101_error_has_error(err))
+    {
+        p101_error_reset(err);
+        fd = -1;
+    }
+
     errno   = 0;
     ret_val = closedir(dirp);
 
