@@ -15,6 +15,7 @@
  */
 
 #include "p101_filesystem/p101_glob.h"
+#include <p101_env/resource_classes.h>
 #include <p101_env/wrapper.h>
 
 /*
@@ -60,7 +61,7 @@ int p101_glob(const struct p101_env *env, struct p101_error *err, const char *re
     }
     else if(ret_val == 0)
     {
-        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "glob-result", pglob, 0U, NULL);
+        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, P101_RESOURCE_CLASS_GLOB_RESULT, pglob, 0U, NULL);
     }
 
     P101_WRAPPER_DONE(env);
@@ -69,12 +70,9 @@ int p101_glob(const struct p101_env *env, struct p101_error *err, const char *re
 
 void p101_globfree(const struct p101_env *env, glob_t *pglob)
 {
-    char resource_id[P101_ENV_POINTER_RESOURCE_ID_SIZE];
-
     P101_TRACE(env);
-    p101_env_pointer_resource_id(resource_id, sizeof(resource_id), pglob);
     errno = 0;
     globfree(pglob);
-    P101_TRACK_RESOURCE_RELEASE(env, "glob-result", resource_id, NULL);
+    P101_TRACK_POINTER_RESOURCE_RELEASE(env, P101_RESOURCE_CLASS_GLOB_RESULT, pglob, NULL);
     P101_TRACE_EXIT(env);
 }

@@ -15,6 +15,7 @@
  */
 
 #include "p101_filesystem/p101_dirent.h"
+#include <p101_env/resource_classes.h>
 #include <p101_env/wrapper.h>
 
 /*
@@ -47,15 +48,12 @@ int p101_alphasort(const struct p101_env *env, const struct dirent **d1, const s
 
 int p101_closedir(const struct p101_env *env, struct p101_error *err, DIR *dirp)
 {
-    char resource_id[P101_ENV_POINTER_RESOURCE_ID_SIZE];
     bool fd_error;
     int  fd;
     int  ret_val;
 
     P101_TRACE(env);
     P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
-    p101_env_pointer_resource_id(resource_id, sizeof(resource_id), dirp);
-
     /*
      * The descriptor decides what to untrack. Take it through the wrapper
      * and keep any failure it raises: the stream is still closed below, so
@@ -80,7 +78,7 @@ int p101_closedir(const struct p101_env *env, struct p101_error *err, DIR *dirp)
         {
             P101_TRACK_CLOSE(env, fd);
         }
-        P101_TRACK_RESOURCE_RELEASE(env, "directory-stream", resource_id, NULL);
+        P101_TRACK_POINTER_RESOURCE_RELEASE(env, P101_RESOURCE_CLASS_DIRECTORY_STREAM, dirp, NULL);
         if(fd_error)
         {
             ret_val = -1;
@@ -124,7 +122,7 @@ DIR *p101_fdopendir(const struct p101_env *env, struct p101_error *err, int fd)
     }
     else if(ret_val != NULL)
     {
-        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "directory-stream", ret_val, 0U, "fdopendir");
+        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, P101_RESOURCE_CLASS_DIRECTORY_STREAM, ret_val, 0U, "fdopendir");
     }
 
     P101_WRAPPER_DONE(env);
@@ -153,7 +151,7 @@ DIR *p101_opendir(const struct p101_env *env, struct p101_error *err, const char
         {
             P101_TRACK_OPEN(env, fd);
         }
-        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, "directory-stream", ret_val, 0U, dirname);
+        P101_TRACK_POINTER_RESOURCE_ACQUIRE(env, P101_RESOURCE_CLASS_DIRECTORY_STREAM, ret_val, 0U, dirname);
     }
 
     P101_WRAPPER_DONE(env);
