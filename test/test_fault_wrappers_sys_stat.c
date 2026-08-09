@@ -871,8 +871,8 @@ static void test_p101_futimens(struct p101_env *env, struct p101_error *err)
                 native_child_status = 77;
                 goto native_child_done_;
             }
-            struct timespec native_argument_3 = {0};
-            int             native_result     = p101_futimens(native_env, native_err, 0, &native_argument_3);
+            struct timespec native_argument_3[2] = {{0}, {0}};
+            int             native_result        = p101_futimens(native_env, native_err, 0, native_argument_3);
             (void)native_result;
             if(p101_error_has_error(native_err))
             {
@@ -1594,8 +1594,8 @@ static void test_p101_utimensat(struct p101_env *env, struct p101_error *err)
                 native_child_status = 77;
                 goto native_child_done_;
             }
-            struct timespec native_argument_4 = {0};
-            int             native_result     = p101_utimensat(native_env, native_err, 0, "p101", &native_argument_4, 0);
+            struct timespec native_argument_4[2] = {{0}, {0}};
+            int             native_result        = p101_utimensat(native_env, native_err, 0, "p101", native_argument_4, 0);
             (void)native_result;
             if(p101_error_has_error(native_err))
             {
