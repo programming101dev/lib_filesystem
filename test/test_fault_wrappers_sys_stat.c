@@ -87,6 +87,31 @@ static int    native_child_status = EXIT_SUCCESS;
         }                                                                                                                                                                                                                                                          \
     } while(0)
 
+static bool native_unlink_if_present(const char *path)
+{
+    bool        result;
+    int         unlink_status;
+    int         unlink_error;
+    const char *message;
+    int         written;
+
+    errno         = 0;
+    unlink_status = unlink(path);
+    unlink_error  = errno;
+    if(unlink_status != 0 && unlink_error != ENOENT)
+    {
+        message = strerror(unlink_error);
+        written = fprintf(stderr, "native cleanup failed: unlink(%s): %s\n", path, message);
+        (void)written;
+        result = false;
+    }
+    else
+    {
+        result = true;
+    }
+    return result;
+}
+
 #define P101_NATIVE_CLEANUP_UNLINK_IF_PRESENT(path)                                                                                                                                                                                                                \
     do                                                                                                                                                                                                                                                             \
     {                                                                                                                                                                                                                                                              \
@@ -98,6 +123,55 @@ static int    native_child_status = EXIT_SUCCESS;
             native_passed = false;                                                                                                                                                                                                                                 \
         }                                                                                                                                                                                                                                                          \
     } while(0)
+
+static bool native_rmdir_if_present(const char *path)
+{
+    bool        result;
+    int         rmdir_status;
+    int         rmdir_error;
+    const char *message;
+    int         written;
+
+    errno        = 0;
+    rmdir_status = rmdir(path);
+    rmdir_error  = errno;
+    if(rmdir_status != 0 && rmdir_error != ENOENT)
+    {
+        message = strerror(rmdir_error);
+        written = fprintf(stderr, "native cleanup failed: rmdir(%s): %s\n", path, message);
+        (void)written;
+        result = false;
+    }
+    else
+    {
+        result = true;
+    }
+    return result;
+}
+
+#define P101_NATIVE_CLEANUP_RMDIR_IF_PRESENT(path)                                                                                                                                                                                                                 \
+    do                                                                                                                                                                                                                                                             \
+    {                                                                                                                                                                                                                                                              \
+        bool p101_cleanup_ok_;                                                                                                                                                                                                                                     \
+                                                                                                                                                                                                                                                                   \
+        p101_cleanup_ok_ = native_rmdir_if_present(path);                                                                                                                                                                                                          \
+        if(!p101_cleanup_ok_)                                                                                                                                                                                                                                      \
+        {                                                                                                                                                                                                                                                          \
+            native_passed = false;                                                                                                                                                                                                                                 \
+        }                                                                                                                                                                                                                                                          \
+    } while(0)
+
+static bool native_format_pid_path(char *buffer, size_t buffer_size, const char *format)
+{
+    bool  result;
+    int   format_length;
+    pid_t process_id;
+
+    process_id    = getpid();
+    format_length = snprintf(buffer, buffer_size, format, (long)process_id);
+    result        = format_length >= 0 && (size_t)format_length < buffer_size;
+    return result;
+}
 
 #define P101_NATIVE_FORMAT_PID_PATH_OR_SKIP(buffer, format)                                                                                                                                                                                                        \
     do                                                                                                                                                                                                                                                             \
@@ -509,7 +583,16 @@ static void test_p101_fchmodat(struct p101_env *env, struct p101_error *err)
                 native_child_status = 77;
                 goto native_child_done_;
             }
-            int native_result = p101_fchmodat(native_env, native_err, 0, "p101", 0, 0);
+            char native_argument_3[] = "/tmp/p101-wrapper-fchmodat-XXXXXX";
+            int  native_argument_3_fd;
+            native_argument_3_fd = mkstemp(native_argument_3);
+            if(native_argument_3_fd < 0)
+            {
+                native_child_status = 77;
+                goto native_child_done_;
+            }
+            P101_NATIVE_CLEANUP_ERRNO(close(native_argument_3_fd));
+            int native_result = p101_fchmodat(native_env, native_err, AT_FDCWD, native_argument_3, 0600, 0);
             (void)native_result;
             if(p101_error_has_error(native_err))
             {
@@ -529,6 +612,7 @@ static void test_p101_fchmodat(struct p101_env *env, struct p101_error *err)
                 }
                 p101_error_reset(native_err);
             }
+            P101_NATIVE_CLEANUP_UNLINK_IF_PRESENT(native_argument_3);
             native_child_status = native_passed ? EXIT_SUCCESS : EXIT_FAILURE;
         native_child_done_:
             p101_env_destroy(native_env);
@@ -751,7 +835,7 @@ static void test_p101_fstatat(struct p101_env *env, struct p101_error *err)
                 goto native_child_done_;
             }
             struct stat native_argument_4 = {0};
-            int         native_result     = p101_fstatat(native_env, native_err, 0, "p101", &native_argument_4, 0);
+            int         native_result     = p101_fstatat(native_env, native_err, AT_FDCWD, ".", &native_argument_4, 0);
             (void)native_result;
             if(p101_error_has_error(native_err))
             {
@@ -1233,7 +1317,10 @@ static void test_p101_mkdirat(struct p101_env *env, struct p101_error *err)
                 native_child_status = 77;
                 goto native_child_done_;
             }
-            int native_result = p101_mkdirat(native_env, native_err, 0, "p101", 0);
+            char native_argument_3[PATH_MAX];
+            P101_NATIVE_FORMAT_PID_PATH_OR_SKIP(native_argument_3, "/tmp/p101-wrapper-mkdirat-%ld");
+            P101_NATIVE_CLEANUP_RMDIR_IF_PRESENT(native_argument_3);
+            int native_result = p101_mkdirat(native_env, native_err, AT_FDCWD, native_argument_3, 0);
             (void)native_result;
             if(p101_error_has_error(native_err))
             {
@@ -1253,6 +1340,7 @@ static void test_p101_mkdirat(struct p101_env *env, struct p101_error *err)
                 }
                 p101_error_reset(native_err);
             }
+            P101_NATIVE_CLEANUP_RMDIR_IF_PRESENT(native_argument_3);
             native_child_status = native_passed ? EXIT_SUCCESS : EXIT_FAILURE;
         native_child_done_:
             p101_env_destroy(native_env);
@@ -1595,7 +1683,7 @@ static void test_p101_utimensat(struct p101_env *env, struct p101_error *err)
                 goto native_child_done_;
             }
             struct timespec native_argument_4[2] = {{0}, {0}};
-            int             native_result        = p101_utimensat(native_env, native_err, 0, "p101", native_argument_4, 0);
+            int             native_result        = p101_utimensat(native_env, native_err, AT_FDCWD, "p101", native_argument_4, 0);
             (void)native_result;
             if(p101_error_has_error(native_err))
             {

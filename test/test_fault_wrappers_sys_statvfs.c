@@ -269,8 +269,15 @@ static void test_p101_fstatvfs(struct p101_env *env, struct p101_error *err)
                 native_child_status = 77;
                 goto native_child_done_;
             }
+            int native_argument_2;
+            native_argument_2 = open(".", O_RDONLY);
+            if(native_argument_2 < 0)
+            {
+                native_child_status = 77;
+                goto native_child_done_;
+            }
             struct statvfs native_argument_3 = {0};
-            int            native_result     = p101_fstatvfs(native_env, native_err, 0, &native_argument_3);
+            int            native_result     = p101_fstatvfs(native_env, native_err, native_argument_2, &native_argument_3);
             (void)native_result;
             if(p101_error_has_error(native_err))
             {
@@ -290,6 +297,7 @@ static void test_p101_fstatvfs(struct p101_env *env, struct p101_error *err)
                 }
                 p101_error_reset(native_err);
             }
+            P101_NATIVE_CLEANUP_ERRNO(close(native_argument_2));
             native_child_status = native_passed ? EXIT_SUCCESS : EXIT_FAILURE;
         native_child_done_:
             p101_env_destroy(native_env);

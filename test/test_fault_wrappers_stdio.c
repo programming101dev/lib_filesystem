@@ -87,6 +87,31 @@ static int    native_child_status = EXIT_SUCCESS;
         }                                                                                                                                                                                                                                                          \
     } while(0)
 
+static bool native_unlink_if_present(const char *path)
+{
+    bool        result;
+    int         unlink_status;
+    int         unlink_error;
+    const char *message;
+    int         written;
+
+    errno         = 0;
+    unlink_status = unlink(path);
+    unlink_error  = errno;
+    if(unlink_status != 0 && unlink_error != ENOENT)
+    {
+        message = strerror(unlink_error);
+        written = fprintf(stderr, "native cleanup failed: unlink(%s): %s\n", path, message);
+        (void)written;
+        result = false;
+    }
+    else
+    {
+        result = true;
+    }
+    return result;
+}
+
 #define P101_NATIVE_CLEANUP_UNLINK_IF_PRESENT(path)                                                                                                                                                                                                                \
     do                                                                                                                                                                                                                                                             \
     {                                                                                                                                                                                                                                                              \
@@ -269,7 +294,26 @@ static void test_p101_renameat(struct p101_env *env, struct p101_error *err)
                 native_child_status = 77;
                 goto native_child_done_;
             }
-            int native_result = p101_renameat(native_env, native_err, 0, "p101", 0, "p101");
+            char native_argument_3[] = "/tmp/p101-wrapper-rename-source-XXXXXX";
+            int  native_argument_3_fd;
+            native_argument_3_fd = mkstemp(native_argument_3);
+            if(native_argument_3_fd < 0)
+            {
+                native_child_status = 77;
+                goto native_child_done_;
+            }
+            P101_NATIVE_CLEANUP_ERRNO(close(native_argument_3_fd));
+            char native_argument_5[] = "/tmp/p101-wrapper-rename-destination-XXXXXX";
+            int  native_argument_5_fd;
+            native_argument_5_fd = mkstemp(native_argument_5);
+            if(native_argument_5_fd < 0)
+            {
+                native_child_status = 77;
+                goto native_child_done_;
+            }
+            P101_NATIVE_CLEANUP_ERRNO(close(native_argument_5_fd));
+            P101_NATIVE_CLEANUP_UNLINK_IF_PRESENT(native_argument_5);
+            int native_result = p101_renameat(native_env, native_err, AT_FDCWD, native_argument_3, AT_FDCWD, native_argument_5);
             (void)native_result;
             if(p101_error_has_error(native_err))
             {
@@ -289,6 +333,8 @@ static void test_p101_renameat(struct p101_env *env, struct p101_error *err)
                 }
                 p101_error_reset(native_err);
             }
+            P101_NATIVE_CLEANUP_UNLINK_IF_PRESENT(native_argument_3);
+            P101_NATIVE_CLEANUP_UNLINK_IF_PRESENT(native_argument_5);
             native_child_status = native_passed ? EXIT_SUCCESS : EXIT_FAILURE;
         native_child_done_:
             p101_env_destroy(native_env);
