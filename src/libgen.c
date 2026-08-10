@@ -27,8 +27,10 @@
  * absence means the GNU declaration won and p101_basename would silently
  * stop modifying the caller's buffer. Fail loudly instead.
  */
-#if defined(__GLIBC__) && !defined(basename)
-    #error "glibc: POSIX basename from <libgen.h> is not in effect; check include order"
+#ifdef __GLIBC__
+    #ifndef basename
+        #error "glibc: POSIX basename from <libgen.h> is not in effect; check include order"
+    #endif
 #endif
 
 char *p101_basename(const struct p101_env *env, struct p101_error *err, char *path)
