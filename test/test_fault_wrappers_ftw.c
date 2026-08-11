@@ -279,7 +279,7 @@ static void test_p101_ftw(struct p101_env *env, struct p101_error *err)
                 native_child_status = 77;
                 goto native_child_done_;
             }
-            int native_result = p101_ftw(native_env, native_err, "p101", 0, 0);
+            int native_result = p101_ftw(native_env, native_err, ".", 0, 0);
             (void)native_result;
             if(p101_error_has_error(native_err))
             {
