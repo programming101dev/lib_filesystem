@@ -1,6 +1,10 @@
 # Tree-walk callbacks are application-owned indirect calls. The raw dirfd in
 # p101_opendir is the recording moment: the descriptor's identity is captured
 # for tracking before the stream is tracked at all, so no wrapper-mediated
-# error path exists yet for the query to report through.
+# error path exists yet for the query to report through. p101_closedir uses the
+# same best-effort identity query before consuming the stream; making that
+# bookkeeping query independently injectable would make successful ownership
+# consumption indistinguishable from an unconsumed stream.
+src/dirent.c	c:@F@p101_closedir	c:@F@dirfd
 src/dirent.c	c:@F@p101_opendir	c:@F@dirfd
 src/ftw.c		c:@T@p101_nftw_fn

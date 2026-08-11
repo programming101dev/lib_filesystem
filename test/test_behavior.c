@@ -47,6 +47,18 @@ static int count_nftw_entry(const char *path, const struct stat *status, int typ
     return 0;
 }
 
+static int fail_only_nested_dirfd(const struct p101_env *env, const char *call_name, void *user_data)
+{
+    int comparison;
+    int result;
+
+    (void)env;
+    (void)user_data;
+    comparison = strcmp(call_name, "p101_dirfd");
+    result     = comparison == 0 ? EIO : 0;
+    return result;
+}
+
 static void expect_invalid_argument(struct p101_error *err, int result)
 {
     bool is_invalid;
@@ -120,6 +132,25 @@ static void test_directory_helpers(const struct p101_env *env)
     EXPECT(closedir(directory) == 0);
 }
 
+static void test_closedir_does_not_inject_bookkeeping(struct p101_env *env, struct p101_error *err)
+{
+    DIR *directory;
+    int  close_status;
+    bool has_error;
+
+    p101_env_set_fault_injector(env, fail_only_nested_dirfd, NULL);
+    directory = p101_opendir(env, err, ".");
+    EXPECT(directory != NULL);
+    if(directory != NULL)
+    {
+        close_status = p101_closedir(env, err, directory);
+        has_error    = p101_error_has_error(err);
+        EXPECT(close_status == 0);
+        EXPECT(!has_error);
+    }
+    p101_env_set_fault_injector(env, NULL, NULL);
+}
+
 static void test_glob_and_process_helpers(const struct p101_env *env)
 {
     glob_t matches = {0};
@@ -160,6 +191,7 @@ int main(void)
     }
     test_path_helpers(env, err);
     test_directory_helpers(env);
+    test_closedir_does_not_inject_bookkeeping(env, err);
     test_glob_and_process_helpers(env);
     test_walk_argument_validation(env, err);
     p101_env_destroy(env);
