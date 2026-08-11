@@ -41,6 +41,23 @@ static FILE  *outcome_stream;
 static bool   native_child_process;
 static int    native_child_status = EXIT_SUCCESS;
 
+static int native_ftw_callback(const char *path, const struct stat *status, int type)
+{
+    (void)path;
+    (void)status;
+    (void)type;
+    return 0;
+}
+
+static int native_nftw_callback(const char *path, const struct stat *status, int type, struct FTW *information)
+{
+    (void)path;
+    (void)status;
+    (void)type;
+    (void)information;
+    return 0;
+}
+
 #define P101_TEST_ERRNO_SENTINEL 0x5A5A
 
 #ifdef __linux__
@@ -279,7 +296,7 @@ static void test_p101_ftw(struct p101_env *env, struct p101_error *err)
                 native_child_status = 77;
                 goto native_child_done_;
             }
-            int native_result = p101_ftw(native_env, native_err, ".", 0, 0);
+            int native_result = p101_ftw(native_env, native_err, ".", native_ftw_callback, 1);
             (void)native_result;
             if(p101_error_has_error(native_err))
             {
@@ -409,7 +426,7 @@ static void test_p101_nftw(struct p101_env *env, struct p101_error *err)
                 native_child_status = 77;
                 goto native_child_done_;
             }
-            int native_result = p101_nftw(native_env, native_err, "p101", 0, 0, 0);
+            int native_result = p101_nftw(native_env, native_err, ".", native_nftw_callback, 1, 0);
             (void)native_result;
             if(p101_error_has_error(native_err))
             {

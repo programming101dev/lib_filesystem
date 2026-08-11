@@ -73,6 +73,14 @@ int p101_ftw(const struct p101_env *env, struct p101_error *err, const char *pat
 
     P101_TRACE(env);
     P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
+
+    if(path == NULL || fn == NULL || ndirs < 1)
+    {
+        P101_ERROR_RAISE_ERRNO(err, EINVAL);
+        ret_val = -1;
+        goto p101_wrapper_done_;
+    }
+
     context.callback = fn;
     context.stopped  = 0;
     context.previous = active_ftw_context;
@@ -101,6 +109,14 @@ int p101_nftw(const struct p101_env *env, struct p101_error *err, const char *pa
 
     P101_TRACE(env);
     P101_WRAPPER_FAULT_RETURN(env, err, ret_val, -1);
+
+    if(path == NULL || fn == NULL || fd_limit < 1)
+    {
+        P101_ERROR_RAISE_ERRNO(err, EINVAL);
+        ret_val = -1;
+        goto p101_wrapper_done_;
+    }
+
     context.callback = fn;
     context.stopped  = 0;
     context.previous = active_nftw_context;

@@ -1,4 +1,5 @@
 #include <dirent.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <p101_env/env.h>
 #include <p101_error/error.h>
@@ -28,6 +29,52 @@ static int failures;
             failures++;                                                                                                                                                                                                                                            \
         }                                                                                                                                                                                                                                                          \
     } while(0)
+
+static int count_ftw_entry(const char *path, const struct stat *status, int type)
+{
+    (void)path;
+    (void)status;
+    (void)type;
+    return 0;
+}
+
+static int count_nftw_entry(const char *path, const struct stat *status, int type, struct FTW *information)
+{
+    (void)path;
+    (void)status;
+    (void)type;
+    (void)information;
+    return 0;
+}
+
+static void expect_invalid_argument(struct p101_error *err, int result)
+{
+    bool is_invalid;
+
+    is_invalid = p101_error_is_errno(err, EINVAL);
+    EXPECT(result == -1);
+    EXPECT(is_invalid);
+    p101_error_reset(err);
+}
+
+static void test_walk_argument_validation(const struct p101_env *env, struct p101_error *err)
+{
+    int result;
+
+    result = p101_ftw(env, err, NULL, count_ftw_entry, 1);
+    expect_invalid_argument(err, result);
+    result = p101_ftw(env, err, ".", NULL, 1);
+    expect_invalid_argument(err, result);
+    result = p101_ftw(env, err, ".", count_ftw_entry, 0);
+    expect_invalid_argument(err, result);
+
+    result = p101_nftw(env, err, NULL, count_nftw_entry, 1, 0);
+    expect_invalid_argument(err, result);
+    result = p101_nftw(env, err, ".", NULL, 1, 0);
+    expect_invalid_argument(err, result);
+    result = p101_nftw(env, err, ".", count_nftw_entry, 0, 0);
+    expect_invalid_argument(err, result);
+}
 
 static void test_path_helpers(const struct p101_env *env, struct p101_error *err)
 {
@@ -114,6 +161,7 @@ int main(void)
     test_path_helpers(env, err);
     test_directory_helpers(env);
     test_glob_and_process_helpers(env);
+    test_walk_argument_validation(env, err);
     p101_env_destroy(env);
     p101_error_destroy(err);
     return failures == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
