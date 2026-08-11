@@ -259,6 +259,7 @@ static void test_p101_glob(struct p101_env *env, struct p101_error *err)
             bool               native_passed = true;
             struct p101_error *native_err    = NULL;
             struct p101_env   *native_env    = NULL;
+            FILE              *native_stdin_result;
 
             native_child_process = true;
             failures             = 0;
@@ -266,6 +267,13 @@ static void test_p101_glob(struct p101_env *env, struct p101_error *err)
             if(unsetenv("P101_CALL_LOG") != 0 || unsetenv("P101_RESOURCE_LOG") != 0)
             {
                 fprintf(stderr, "native setup failed: cannot clear p101 logging environment\n");
+                native_child_status = 77;
+                goto native_child_done_;
+            }
+            native_stdin_result = freopen("/dev/null", "r", stdin);
+            if(native_stdin_result == NULL)
+            {
+                fprintf(stderr, "native setup failed: cannot make standard input deterministic\n");
                 native_child_status = 77;
                 goto native_child_done_;
             }
