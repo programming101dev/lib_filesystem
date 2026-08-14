@@ -30,6 +30,8 @@
     #include <sys/types.h>
     #include <unistd.h>
 
+struct FTW;
+
 typedef int (*p101_ftw_fn)(const char *fpath, const struct stat *sb, int typeflag);
 typedef int (*p101_nftw_fn)(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf);
 #endif    // LIBP101_FILESYSTEM_SHARED_DECLARATIONS
