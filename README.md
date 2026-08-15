@@ -13,8 +13,8 @@ source-tree boundary.
 ## Build and verification
 
 ```sh
-./change-compiler.sh -c clang
-./check.sh
+cmake -S . -B build -DCMAKE_C_COMPILER=clang -DP101_BUILD_LEVEL=1
+cmake -S . -B build -DP101_BUILD_LEVEL=3 && cmake --build build
 ```
 
 Every public wrapper is listed in `test/unit-test-manifest.tsv` and

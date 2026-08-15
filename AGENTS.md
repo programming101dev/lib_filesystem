@@ -62,8 +62,8 @@ jump-capture site in fuzz harnesses or teaching examples.
 
 Whenever practical, finish a change with a receipt the next person can replay:
 
-- `./check.sh` or `./build.sh -q` for an individual C/C++ repo;
-- `./test.sh` for unit tests;
+- `cmake -S . -B build -DP101_BUILD_LEVEL=3 && cmake --build build` or `cmake --build build` for an individual C/C++ repo;
+- `cmake -S . -B build -DP101_BUILD_LEVEL=2 && cmake --build build` for unit tests;
 - `scripts/tests/test-cmake.sh` for shared CMake changes;
 - `scripts/check-after-update-all.sh` for the stack-level smoke;
 - `scripts/checks/check-p101-regression-corpus.sh` for behavior claims.
