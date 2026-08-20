@@ -41,10 +41,10 @@ extern "C"
 {
 #endif
 
-    int     p101_access(const struct p101_env *env, struct p101_error *err, const char *path, int amode);
+    int     p101_access(const struct p101_env *env, struct p101_error *err, const char *path, int amode) P101_ATTR_SEMANTIC_ROLE("p101:filesystem:path-check");
     int     p101_chdir(const struct p101_env *env, struct p101_error *err, const char *path);
-    int     p101_chown(const struct p101_env *env, struct p101_error *err, const char *path, uid_t owner, gid_t group);
-    int     p101_faccessat(const struct p101_env *env, struct p101_error *err, int fd, const char *path, int amode, int flag);
+    int     p101_chown(const struct p101_env *env, struct p101_error *err, const char *path, uid_t owner, gid_t group) P101_ATTR_SEMANTIC_ROLE("p101:filesystem:path-use");
+    int     p101_faccessat(const struct p101_env *env, struct p101_error *err, int fd, const char *path, int amode, int flag) P101_ATTR_SEMANTIC_ROLE("p101:filesystem:path-check");
     int     p101_fchdir(const struct p101_env *env, struct p101_error *err, int fildes);
     int     p101_fchown(const struct p101_env *env, struct p101_error *err, int fildes, uid_t owner, gid_t group);
     int     p101_fchownat(const struct p101_env *env, struct p101_error *err, int fd, const char *path, uid_t owner, gid_t group, int flag);
@@ -61,8 +61,8 @@ extern "C"
     int     p101_symlink(const struct p101_env *env, struct p101_error *err, const char *path1, const char *path2);
     int     p101_symlinkat(const struct p101_env *env, struct p101_error *err, const char *path1, int fd, const char *path2);
     void    p101_sync(const struct p101_env *env);
-    int     p101_truncate(const struct p101_env *env, struct p101_error *err, const char *path, off_t length);
-    int     p101_unlink(const struct p101_env *env, struct p101_error *err, const char *path);
+    int     p101_truncate(const struct p101_env *env, struct p101_error *err, const char *path, off_t length) P101_ATTR_SEMANTIC_ROLE("p101:filesystem:path-use");
+    int     p101_unlink(const struct p101_env *env, struct p101_error *err, const char *path) P101_ATTR_SEMANTIC_ROLE("p101:filesystem:path-use");
     int     p101_unlinkat(const struct p101_env *env, struct p101_error *err, int fd, const char *path, int flag);
 
 #ifdef __cplusplus

@@ -41,17 +41,17 @@ extern "C"
 {
 #endif
 
-    int    p101_chmod(const struct p101_env *env, struct p101_error *err, const char *path, mode_t mode);
+    int    p101_chmod(const struct p101_env *env, struct p101_error *err, const char *path, mode_t mode) P101_ATTR_SEMANTIC_ROLE("p101:filesystem:path-use");
     int    p101_fchmod(const struct p101_env *env, struct p101_error *err, int fildes, mode_t mode);
     int    p101_fchmodat(const struct p101_env *env, struct p101_error *err, int fd, const char *path, mode_t mode, int flag);
     int    p101_fstat(const struct p101_env *env, struct p101_error *err, int fildes, struct stat *buf);
     int    p101_fstatat(const struct p101_env *env, struct p101_error *err, int fd, const char *restrict path, struct stat *restrict buf, int flag);
     int    p101_futimens(const struct p101_env *env, struct p101_error *err, int fd, const struct timespec times[2]);
-    int    p101_lstat(const struct p101_env *env, struct p101_error *err, const char *restrict path, struct stat *restrict buf);
+    int    p101_lstat(const struct p101_env *env, struct p101_error *err, const char *restrict path, struct stat *restrict buf) P101_ATTR_SEMANTIC_ROLE("p101:filesystem:path-check");
     int    p101_mkdir(const struct p101_env *env, struct p101_error *err, const char *path, mode_t mode);
     int    p101_mkdirat(const struct p101_env *env, struct p101_error *err, int fd, const char *path, mode_t mode);
     int    p101_mknod(const struct p101_env *env, struct p101_error *err, const char *path, mode_t mode, dev_t dev);
-    int    p101_stat(const struct p101_env *env, struct p101_error *err, const char *restrict path, struct stat *restrict buf);
+    int    p101_stat(const struct p101_env *env, struct p101_error *err, const char *restrict path, struct stat *restrict buf) P101_ATTR_SEMANTIC_ROLE("p101:filesystem:path-check");
     mode_t p101_umask(const struct p101_env *env, mode_t cmask);
     int    p101_utimensat(const struct p101_env *env, struct p101_error *err, int fd, const char *path, const struct timespec times[2], int flag);
 
